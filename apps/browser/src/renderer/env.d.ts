@@ -7,7 +7,10 @@ interface DownloadItem {
   savePath: string
   totalBytes: number
   receivedBytes: number
+  speed: number
+  timeRemaining: number
   state: 'progressing' | 'completed' | 'cancelled' | 'interrupted'
+  error: string
   startTime: number
 }
 
@@ -45,6 +48,9 @@ interface PortalOSAPI {
   downloads: {
     getAll: () => Promise<DownloadItem[]>
     clear: () => void
+    cancel: (id: string) => void
+    openFile: (savePath: string) => void
+    showInFolder: (savePath: string) => void
     onStarted: (callback: (item: DownloadItem) => void) => () => void
     onProgress: (callback: (item: DownloadItem) => void) => () => void
     onDone: (callback: (item: DownloadItem) => void) => () => void
@@ -73,7 +79,7 @@ interface PortalOSAPI {
   updater: {
     check: () => void
     install: () => void
-    onAvailable: (callback: (data: { version: string }) => void) => () => void
+    onAvailable: (callback: (data: { version: string; releaseNotes: string }) => void) => () => void
     onProgress: (callback: (data: { percent: number }) => void) => () => void
     onReady: (callback: (data: { version: string }) => void) => () => void
     onUpToDate: (callback: () => void) => () => void

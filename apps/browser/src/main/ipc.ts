@@ -26,7 +26,7 @@ import {
   openDevTools,
   bindWindowResize
 } from './tabs'
-import { getDownloads, clearDownloads } from './downloads'
+import { getDownloads, clearDownloads, cancelDownload, openDownloadedFile, showDownloadInFolder } from './downloads'
 import {
   getHistory,
   searchHistory,
@@ -230,6 +230,18 @@ export function registerIpcHandlers(): void {
 
   ipcMain.on('downloads:clear', () => {
     clearDownloads()
+  })
+
+  ipcMain.on('downloads:cancel', (_e, id: string) => {
+    cancelDownload(sanitizeString(id))
+  })
+
+  ipcMain.on('downloads:openFile', (_e, savePath: string) => {
+    openDownloadedFile(sanitizeString(savePath))
+  })
+
+  ipcMain.on('downloads:showInFolder', (_e, savePath: string) => {
+    showDownloadInFolder(sanitizeString(savePath))
   })
 
   // ── Settings ──

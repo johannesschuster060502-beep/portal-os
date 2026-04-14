@@ -54,6 +54,9 @@ const api = {
   downloads: {
     getAll: (): Promise<unknown[]> => ipcRenderer.invoke('downloads:getAll'),
     clear: (): void => ipcRenderer.send('downloads:clear'),
+    cancel: (id: string): void => ipcRenderer.send('downloads:cancel', id),
+    openFile: (savePath: string): void => ipcRenderer.send('downloads:openFile', savePath),
+    showInFolder: (savePath: string): void => ipcRenderer.send('downloads:showInFolder', savePath),
     onStarted: (callback: (item: unknown) => void) => {
       const handler = (_: unknown, item: unknown): void => callback(item)
       ipcRenderer.on('download:started', handler)
@@ -117,8 +120,9 @@ const api = {
   updater: {
     check: (): void => ipcRenderer.send('updater:check'),
     install: (): void => ipcRenderer.send('updater:install'),
-    onAvailable: (callback: (data: { version: string }) => void) => {
-      const handler = (_: unknown, data: { version: string }): void => callback(data)
+    onAvailable: (callback: (data: { version: string; releaseNotes: string }) => void) => {
+      const handler = (_: unknown, data: { version: string; releaseNotes: string }): void =>
+        callback(data)
       ipcRenderer.on('updater:available', handler)
       return () => ipcRenderer.removeListener('updater:available', handler)
     },

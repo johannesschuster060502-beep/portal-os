@@ -220,6 +220,15 @@ export interface Translations {
     noHistoryHint: string
   }
 
+  // Downloads panel
+  downloadsPanel: {
+    clearDone: string
+    open: string
+    showInFolder: string
+    cancelled: string
+    interrupted: string
+  }
+
   // Updater
   updater: {
     downloading: string
@@ -227,6 +236,8 @@ export interface Translations {
     installAndRestart: string
     upToDate: string
     checking: string
+    whatsNew: string
+    hideChangelog: string
   }
 
   // STUDOX
@@ -432,12 +443,21 @@ const en: Translations = {
     noHistory: 'No history yet',
     noHistoryHint: 'Start browsing to build history'
   },
+  downloadsPanel: {
+    clearDone: 'Clear done',
+    open: 'Open',
+    showInFolder: 'Show in folder',
+    cancelled: 'Cancelled',
+    interrupted: 'Interrupted'
+  },
   updater: {
     downloading: 'Downloading Portal OS',
     ready: 'is ready to install.',
     installAndRestart: 'Install & Restart',
     upToDate: 'You are on the latest version.',
-    checking: 'Checking for updates...'
+    checking: 'Checking for updates...',
+    whatsNew: "What's new",
+    hideChangelog: 'Hide'
   },
   studox: {
     coreButtonLabel: 'Open StudoX Core',
@@ -639,12 +659,21 @@ const de: Translations = {
     noHistory: 'Noch kein Verlauf',
     noHistoryHint: 'Fang an zu surfen um Verlauf aufzubauen'
   },
+  downloadsPanel: {
+    clearDone: 'Erledigte löschen',
+    open: 'Öffnen',
+    showInFolder: 'Im Ordner anzeigen',
+    cancelled: 'Abgebrochen',
+    interrupted: 'Unterbrochen'
+  },
   updater: {
     downloading: 'Lade Portal OS',
     ready: 'ist bereit zur Installation.',
     installAndRestart: 'Installieren & neustarten',
     upToDate: 'Du verwendest die aktuellste Version.',
-    checking: 'Suche nach Updates...'
+    checking: 'Suche nach Updates...',
+    whatsNew: 'Was ist neu',
+    hideChangelog: 'Ausblenden'
   },
   studox: {
     coreButtonLabel: 'StudoX Core öffnen',

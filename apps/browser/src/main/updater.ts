@@ -3,6 +3,20 @@ import { BrowserWindow, ipcMain } from 'electron'
 
 let mainWin: BrowserWindow | null = null
 
+function normalizeReleaseNotes(
+  notes: string | Array<{ version: string; note: string | null }> | null | undefined
+): string {
+  if (!notes) return ''
+  if (typeof notes === 'string') return notes
+  if (Array.isArray(notes)) {
+    return notes
+      .filter((n) => n.note)
+      .map((n) => `v${n.version}:\n${n.note}`)
+      .join('\n\n')
+  }
+  return ''
+}
+
 export function initUpdater(mainWindow: BrowserWindow): void {
   mainWin = mainWindow
 
@@ -30,7 +44,9 @@ export function initUpdater(mainWindow: BrowserWindow): void {
   autoUpdater.on('update-available', (info) => {
     send('updater:available', {
       version: info.version,
-      releaseNotes: info.releaseNotes || ''
+      releaseNotes: normalizeReleaseNotes(
+        info.releaseNotes as Parameters<typeof normalizeReleaseNotes>[0]
+      )
     })
   })
 

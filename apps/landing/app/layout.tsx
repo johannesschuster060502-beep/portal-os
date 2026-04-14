@@ -1,22 +1,23 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { LangProvider } from '@/context/LangContext'
 
 export const metadata: Metadata = {
-  title: 'Portal OS — The Browser That Thinks Differently',
+  title: 'Portal OS — Der Browser, der anders denkt',
   description:
-    'An immersive Chromium-based desktop browser with a cinematic 3D interface. Built by JohannesAFK (StudoX). Download for Windows, macOS, and Linux.',
+    'Ein immersiver Chromium-basierter Desktop-Browser mit cinematischer 3D-Oberfläche. Entwickelt von JohannesAFK (StudoX). Download für Windows, macOS und Linux.',
   keywords: ['browser', 'desktop browser', 'chromium', 'electron', 'portal os', '3d browser'],
   authors: [{ name: 'JohannesAFK (StudoX)' }],
   openGraph: {
     title: 'Portal OS',
-    description: 'The browser that thinks differently.',
+    description: 'Der Browser, der anders denkt.',
     type: 'website',
     siteName: 'Portal OS'
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Portal OS',
-    description: 'The browser that thinks differently.'
+    description: 'Der Browser, der anders denkt.'
   }
 }
 
@@ -26,8 +27,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="de">
+      <body>
+        <LangProvider>{children}</LangProvider>
+      </body>
     </html>
   )
 }

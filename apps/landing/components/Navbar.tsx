@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useLang } from '@/context/LangContext'
 
 export default function Navbar() {
+  const { lang, t, setLang } = useLang()
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -15,9 +17,9 @@ export default function Navbar() {
   }, [])
 
   const links = [
-    { href: '/#features', label: 'Features' },
-    { href: '/download', label: 'Download' },
-    { href: '/changelog', label: 'Changelog' }
+    { href: '/#features', label: t.nav.features },
+    { href: '/download', label: t.nav.download },
+    { href: '/changelog', label: t.nav.changelog }
   ]
 
   return (
@@ -33,35 +35,26 @@ export default function Navbar() {
       <Link href="/" className="flex items-center gap-2.5 no-underline shrink-0">
         <span
           className="opacity-70"
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: 'clamp(15px, 1.1vw, 18px)'
-          }}
+          style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(15px, 1.1vw, 18px)' }}
         >
           ⬡
         </span>
         <span
           className="tracking-[0.14em] opacity-55"
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: 'clamp(10px, 0.75vw, 12px)'
-          }}
+          style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(10px, 0.75vw, 12px)' }}
         >
           PORTAL OS
         </span>
       </Link>
 
-      {/* Desktop links */}
+      {/* Desktop links + language toggle */}
       <div className="hidden md:flex items-center gap-8">
         {links.map((l) => (
           <Link
             key={l.href}
             href={l.href}
             className="tracking-wider no-underline transition-opacity hover:opacity-70"
-            style={{
-              color: 'var(--text-secondary)',
-              fontSize: 'clamp(11px, 0.85vw, 13px)'
-            }}
+            style={{ color: 'var(--text-secondary)', fontSize: 'clamp(11px, 0.85vw, 13px)' }}
           >
             {l.label}
           </Link>
@@ -71,13 +64,36 @@ export default function Navbar() {
           target="_blank"
           rel="noopener noreferrer"
           className="tracking-wider no-underline transition-opacity hover:opacity-70"
-          style={{
-            color: 'var(--text-secondary)',
-            fontSize: 'clamp(11px, 0.85vw, 13px)'
-          }}
+          style={{ color: 'var(--text-secondary)', fontSize: 'clamp(11px, 0.85vw, 13px)' }}
         >
           GitHub
         </a>
+
+        {/* Language switcher */}
+        <div
+          className="flex items-center gap-1"
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'clamp(9px, 0.75vw, 11px)',
+            letterSpacing: '0.1em'
+          }}
+        >
+          <button
+            onClick={() => setLang('de')}
+            className="transition-opacity hover:opacity-100"
+            style={{ color: lang === 'de' ? 'var(--accent)' : 'var(--text-disabled)', background: 'none', border: 'none', cursor: 'pointer', padding: '2px 4px' }}
+          >
+            DE
+          </button>
+          <span style={{ color: 'var(--border-subtle)' }}>|</span>
+          <button
+            onClick={() => setLang('en')}
+            className="transition-opacity hover:opacity-100"
+            style={{ color: lang === 'en' ? 'var(--accent)' : 'var(--text-disabled)', background: 'none', border: 'none', cursor: 'pointer', padding: '2px 4px' }}
+          >
+            EN
+          </button>
+        </div>
       </div>
 
       {/* Mobile: hamburger */}
@@ -95,10 +111,7 @@ export default function Navbar() {
         />
         <span
           className="w-5 h-px transition-opacity"
-          style={{
-            background: 'rgba(255,255,255,0.6)',
-            opacity: mobileOpen ? 0 : 1
-          }}
+          style={{ background: 'rgba(255,255,255,0.6)', opacity: mobileOpen ? 0 : 1 }}
         />
         <span
           className="w-5 h-px transition-transform"
@@ -139,6 +152,31 @@ export default function Navbar() {
           >
             GitHub
           </a>
+
+          {/* Mobile language switcher */}
+          <div className="flex items-center gap-3 pt-2" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+            <button
+              onClick={() => { setLang('de'); setMobileOpen(false) }}
+              style={{
+                color: lang === 'de' ? 'var(--accent)' : 'var(--text-disabled)',
+                background: 'none', border: 'none', cursor: 'pointer',
+                fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em'
+              }}
+            >
+              DE — Deutsch
+            </button>
+            <span style={{ color: 'var(--border-subtle)' }}>|</span>
+            <button
+              onClick={() => { setLang('en'); setMobileOpen(false) }}
+              style={{
+                color: lang === 'en' ? 'var(--accent)' : 'var(--text-disabled)',
+                background: 'none', border: 'none', cursor: 'pointer',
+                fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em'
+              }}
+            >
+              EN — English
+            </button>
+          </div>
         </div>
       )}
     </nav>

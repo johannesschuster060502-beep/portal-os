@@ -41,6 +41,14 @@ app.whenReady().then(() => {
     'persistent-storage'
   ])
 
+  // ── IDENTITY: Stamp every outgoing request so StudoX services can
+  //    detect Portal OS regardless of browser version or update channel.
+  //    Detection string "StudoX-PortalOS" is intentionally version-free —
+  //    do NOT add a version suffix here; the Core website detects the
+  //    fixed token and will always work across all future releases.
+  const baseUA = session.defaultSession.getUserAgent()
+  session.defaultSession.setUserAgent(`${baseUA} StudoX-PortalOS`)
+
   session.defaultSession.setPermissionRequestHandler((_wc, permission, callback) => {
     if (alwaysDeny.has(permission)) return callback(false)
     if (allowedByDefault.has(permission)) return callback(true)
