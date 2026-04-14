@@ -55,13 +55,31 @@ body {
   outline-offset: 2px;
 }
 
-/* Draggable region for title bar */
+/* ══════════════════════════════════════════════
+   Window drag regions — CRITICAL: child elements
+   that should be clickable MUST explicitly reset
+   -webkit-app-region to no-drag.
+   ══════════════════════════════════════════════ */
 .drag-region {
   -webkit-app-region: drag;
+  app-region: drag;
 }
 
-.no-drag {
+.drag-region button,
+.drag-region a,
+.drag-region input,
+.drag-region select,
+.drag-region textarea,
+.drag-region [role='combobox'],
+.drag-region [role='button'] {
   -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+
+.no-drag,
+.no-drag * {
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
 }
 
 /* Glass panel utility */
@@ -82,4 +100,87 @@ body {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* ══════════════════════════════════════════════
+   CYBERPUNK GLITCH EFFECTS — for STUDOX Core
+   ══════════════════════════════════════════════ */
+
+@keyframes glitch-skew {
+  0%, 100% { transform: skew(0deg); }
+  20% { transform: skew(1.5deg); }
+  40% { transform: skew(-1deg); }
+  60% { transform: skew(0.8deg); }
+  80% { transform: skew(-1.2deg); }
+}
+
+@keyframes glitch-rgb {
+  0%, 100% {
+    text-shadow: 0 0 0 transparent;
+    transform: translate(0);
+  }
+  20% {
+    text-shadow:
+      -2px 0 0 rgba(255, 0, 80, 0.75),
+      2px 0 0 rgba(0, 255, 240, 0.75);
+    transform: translate(0.5px, 0);
+  }
+  40% {
+    text-shadow:
+      2px 0 0 rgba(255, 0, 80, 0.75),
+      -2px 0 0 rgba(0, 255, 240, 0.75);
+    transform: translate(-0.5px, 0.5px);
+  }
+  60% {
+    text-shadow:
+      -1px 0 0 rgba(255, 0, 80, 0.75),
+      1px 0 0 rgba(0, 255, 240, 0.75);
+    transform: translate(0, -0.5px);
+  }
+  80% {
+    text-shadow:
+      1px 0 0 rgba(255, 0, 80, 0.75),
+      -1px 0 0 rgba(0, 255, 240, 0.75);
+    transform: translate(0.5px, 0);
+  }
+}
+
+@keyframes scanlines-drift {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 8px; }
+}
+
+@keyframes glitch-clip-1 {
+  0%, 100% { clip-path: inset(0 0 0 0); }
+  20% { clip-path: inset(20% 0 45% 0); }
+  40% { clip-path: inset(55% 0 10% 0); }
+  60% { clip-path: inset(5% 0 70% 0); }
+  80% { clip-path: inset(70% 0 5% 0); }
+}
+
+@keyframes glitch-flicker {
+  0%, 100% { opacity: 1; }
+  10%, 15% { opacity: 0.92; }
+  50%, 55% { opacity: 0.96; }
+  70%, 72% { opacity: 0.88; }
+}
+
+.glitch-text {
+  position: relative;
+  animation: glitch-rgb 0.8s infinite steps(1);
+}
+
+.scanlines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 240, 0.03) 0px,
+    rgba(0, 255, 240, 0.03) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  animation: scanlines-drift 0.4s linear infinite;
+}
+
+.flicker {
+  animation: glitch-flicker 0.3s infinite;
 }

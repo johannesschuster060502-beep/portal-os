@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useUIStore } from '@store/ui.store'
 import { duration } from '@lib/motion'
+import { detectLocale } from '@lib/i18n'
 
 /**
  * Portal OS — Boot Screen
@@ -23,13 +24,24 @@ const LINE_HOLD_MS = 140
 const INITIAL_DELAY_MS = 200
 const READY_HOLD_MS = 600
 
-const bootLines = [
-  { text: 'PORTAL OS v1.0.0', dim: false },
-  { text: 'initializing chromium engine... ok', dim: true },
-  { text: 'loading extensions... ok', dim: true },
-  { text: 'mounting secure context... ok', dim: true },
-  { text: 'ready.', dim: false }
-]
+const bootLinesByLocale = {
+  en: [
+    { text: 'PORTAL OS v1.0.2', dim: false },
+    { text: 'initializing chromium engine... ok', dim: true },
+    { text: 'loading extensions... ok', dim: true },
+    { text: 'mounting secure context... ok', dim: true },
+    { text: 'establishing studox protocol... ok', dim: true },
+    { text: 'ready.', dim: false }
+  ],
+  de: [
+    { text: 'PORTAL OS v1.0.2', dim: false },
+    { text: 'initialisiere chromium engine... ok', dim: true },
+    { text: 'lade erweiterungen... ok', dim: true },
+    { text: 'sicherer kontext aktiviert... ok', dim: true },
+    { text: 'studox protokoll aufgebaut... ok', dim: true },
+    { text: 'bereit.', dim: false }
+  ]
+}
 
 const STORAGE_KEY = 'portalos-has-booted'
 
@@ -46,6 +58,16 @@ export default function BootScreen(): JSX.Element {
       return true
     }
   })
+  // Boot runs before i18n store is loaded, so read raw locale from storage/navigator
+  const bootLines = (() => {
+    try {
+      const stored = localStorage.getItem('portalos-locale')
+      if (stored === 'de' || stored === 'en') return bootLinesByLocale[stored]
+    } catch {
+      // Ignore
+    }
+    return bootLinesByLocale[detectLocale()]
+  })()
   const mountedRef = useRef(true)
 
   useEffect(() => {
@@ -200,10 +222,12 @@ export default function BootScreen(): JSX.Element {
 
       {/* Branding */}
       <div
-        className="absolute bottom-8 text-[10px] tracking-[0.2em]"
-        style={{ color: 'rgba(255,255,255,0.06)', fontFamily: 'var(--font-mono)' }}
+        className="absolute bottom-8 flex items-center gap-2 text-[10px] tracking-[0.2em]"
+        style={{ color: 'rgba(255,255,255,0.08)', fontFamily: 'var(--font-mono)' }}
       >
-        BUILT BY JOHANNESAFK
+        <span>BY JOHANNESAFK</span>
+        <span style={{ opacity: 0.4 }}>·</span>
+        <span style={{ color: 'rgba(124,106,247,0.35)' }}>POWERED BY STUDOX</span>
       </div>
     </motion.div>
   )

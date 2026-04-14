@@ -5,6 +5,7 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import { springStandard, overlayVariants, duration } from '@lib/motion'
 import { useUIStore } from '@store/ui.store'
 import { useTabsStore } from '@store/tabs.store'
+import { useI18nStore } from '@store/i18n.store'
 import Favicon from '@components/Common/Favicon'
 
 interface HistoryEntry {
@@ -19,6 +20,7 @@ interface HistoryEntry {
 export default function HistoryPanel(): JSX.Element {
   const setHistoryOpen = useUIStore((s) => s.setHistoryOpen)
   const navigateTo = useTabsStore((s) => s.navigateTo)
+  const t = useI18nStore((s) => s.t)
   const [entries, setEntries] = useState<HistoryEntry[]>([])
   const [query, setQuery] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -58,11 +60,11 @@ export default function HistoryPanel(): JSX.Element {
       const d = new Date(entry.visited_at)
       const ds = d.toDateString()
       let label: string
-      if (ds === today) label = 'TODAY'
-      else if (ds === yesterday) label = 'YESTERDAY'
+      if (ds === today) label = t.history.today
+      else if (ds === yesterday) label = t.history.yesterday
       else {
         const diff = Math.floor((now.getTime() - d.getTime()) / 86400000)
-        label = diff < 7 ? 'THIS WEEK' : 'OLDER'
+        label = diff < 7 ? t.history.thisWeek : t.history.older
       }
 
       if (label !== lastLabel) {
@@ -72,7 +74,7 @@ export default function HistoryPanel(): JSX.Element {
       result.push({ type: 'entry', entry })
     }
     return result
-  }, [entries])
+  }, [entries, t])
 
   const virtualizer = useVirtualizer({
     count: rows.length,
@@ -114,23 +116,23 @@ export default function HistoryPanel(): JSX.Element {
           className="flex items-center justify-between px-5 h-12 shrink-0"
           style={{ borderBottom: '1px solid var(--border-dim)' }}
         >
-          <span className="text-[13px]" style={{ color: 'var(--text-primary)' }}>History</span>
+          <span className="text-[13px]" style={{ color: 'var(--text-primary)' }}>{t.history.title}</span>
           <div className="flex items-center gap-2">
             <button
               onClick={clearAll}
               className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] opacity-40
                          hover:opacity-80 hover:bg-white/5 transition-all"
               style={{ color: 'var(--danger)' }}
-              aria-label="Clear all history"
+              aria-label={t.history.clearAll}
             >
               <Trash size={12} />
-              Clear all
+              {t.history.clearAll}
             </button>
             <button
               onClick={() => setHistoryOpen(false)}
               className="w-6 h-6 flex items-center justify-center rounded-md opacity-30
                          hover:opacity-70 hover:bg-white/5 transition-all"
-              aria-label="Close history"
+              aria-label={t.common.close}
             >
               <X size={14} />
             </button>
@@ -149,11 +151,11 @@ export default function HistoryPanel(): JSX.Element {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search history..."
+              placeholder={t.history.searchPlaceholder}
               className="flex-1 bg-transparent border-none outline-none text-[12px] text-white/80
                          placeholder:text-white/20"
               spellCheck={false}
-              aria-label="Search history"
+              aria-label={t.history.searchPlaceholder}
             />
           </div>
         </div>
@@ -167,7 +169,7 @@ export default function HistoryPanel(): JSX.Element {
           {rows.length === 0 && (
             <div className="flex flex-col items-center justify-center py-12 gap-2">
               <p className="text-[12px]" style={{ color: 'var(--text-tertiary)' }}>
-                {query ? 'No results found' : 'No history yet'}
+                {query ? t.history.noResults : t.history.noHistory}
               </p>
             </div>
           )}

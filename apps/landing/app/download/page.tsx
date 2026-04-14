@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
-const VERSION = process.env.NEXT_PUBLIC_VERSION || '1.0.1'
+const VERSION = process.env.NEXT_PUBLIC_VERSION || '1.0.2'
 const BASE =
   process.env.NEXT_PUBLIC_DOWNLOAD_BASE_URL ||
   'https://github.com/johannesschuster060502-beep/portal-os-releases/releases/latest/download'

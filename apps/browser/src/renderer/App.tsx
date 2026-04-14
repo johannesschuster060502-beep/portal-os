@@ -3,6 +3,8 @@ import { AnimatePresence } from 'framer-motion'
 import { useUIStore } from '@store/ui.store'
 import { useTabsStore, TabState } from '@store/tabs.store'
 import { useSettingsStore } from '@store/settings.store'
+import { useI18nStore } from '@store/i18n.store'
+import { useGroupsStore } from '@store/groups.store'
 import { useShortcuts } from '@hooks/useShortcuts'
 import BootScreen from '@components/Boot/BootScreen'
 import TitleBar from '@components/Shell/TitleBar'
@@ -16,6 +18,7 @@ const Sidebar = lazy(() => import('@components/Shell/Sidebar'))
 const FindBar = lazy(() => import('@components/Overlays/FindBar'))
 const DownloadBar = lazy(() => import('@components/Overlays/DownloadBar'))
 const UpdateBar = lazy(() => import('@components/Overlays/UpdateBar'))
+const StudoxCoreOverlay = lazy(() => import('@components/Overlays/StudoxCoreOverlay'))
 
 export default function App(): JSX.Element {
   const booted = useUIStore((s) => s.booted)
@@ -28,11 +31,15 @@ export default function App(): JSX.Element {
   const tabs = useTabsStore((s) => s.tabs)
   const setTabs = useTabsStore((s) => s.setTabs)
   const updateTab = useTabsStore((s) => s.updateTab)
+  const t = useI18nStore((s) => s.t)
 
   useShortcuts()
 
   useEffect(() => {
+    // Load user preferences from SQLite
     useSettingsStore.getState().loadFromDB()
+    useI18nStore.getState().loadFromDB()
+    useGroupsStore.getState().loadFromDB()
 
     const unsubUpdated = window.portalOS.tabs.onUpdated((state) => {
       updateTab(state as TabState)
@@ -49,13 +56,13 @@ export default function App(): JSX.Element {
       unsubActivated()
       unsubList()
     }
-  }, [])
+  }, [setTabs, updateTab])
 
   useEffect(() => {
     if (booted && tabs.length === 0) {
       window.portalOS.tabs.create()
     }
-  }, [booted])
+  }, [booted, tabs.length])
 
   const activeTab = tabs.find((t) => t.id === activeTabId)
   const showNewTab = activeTab?.isInternalPage ?? true
@@ -110,7 +117,7 @@ export default function App(): JSX.Element {
                         color: 'var(--text-secondary)'
                       }}
                     >
-                      ↺ Reload
+                      ↺ {t.shell.reload}
                     </button>
                   </div>
                 )}
@@ -135,6 +142,11 @@ export default function App(): JSX.Element {
             <AnimatePresence>
               {historyOpen && <HistoryPanel key="history" />}
             </AnimatePresence>
+          </Suspense>
+
+          {/* STUDOX Core cyberpunk transition — always mounted so it can animate cleanly */}
+          <Suspense fallback={null}>
+            <StudoxCoreOverlay />
           </Suspense>
         </>
       )}

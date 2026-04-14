@@ -27,6 +27,13 @@ export function useShortcuts(): void {
         return
       }
 
+      // Ctrl+Shift+S — STUDOX Core (cyberpunk glitch transition)
+      if (mod && shift && (e.key === 'S' || e.key === 's')) {
+        e.preventDefault()
+        useUIStore.getState().openStudoxCore()
+        return
+      }
+
       if (mod && !shift && e.key === 'l') {
         e.preventDefault()
         document.querySelector<HTMLInputElement>('[role="combobox"]')?.focus()

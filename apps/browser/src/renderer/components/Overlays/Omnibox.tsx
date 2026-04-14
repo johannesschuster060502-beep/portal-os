@@ -8,10 +8,12 @@ import {
   Star,
   Gear,
   Plus,
-  BookmarkSimple
+  BookmarkSimple,
+  Lightning
 } from '@phosphor-icons/react'
 import { useUIStore } from '@store/ui.store'
 import { useTabsStore } from '@store/tabs.store'
+import { useI18nStore } from '@store/i18n.store'
 
 interface OmniResult {
   id: string
@@ -24,9 +26,11 @@ interface OmniResult {
 
 export default function Omnibox(): JSX.Element {
   const setOmnibox = useUIStore((s) => s.setOmnibox)
+  const openStudoxCore = useUIStore((s) => s.openStudoxCore)
   const tabs = useTabsStore((s) => s.tabs)
   const navigateTo = useTabsStore((s) => s.navigateTo)
   const addTab = useTabsStore((s) => s.addTab)
+  const t = useI18nStore((s) => s.t)
 
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -112,13 +116,24 @@ export default function Omnibox(): JSX.Element {
       })
     }
 
-    // Quick actions (always show when no query or query matches)
+    // Quick actions
     const actions: OmniResult[] = [
+      {
+        id: 'action-studox',
+        type: 'action',
+        title: t.omnibox.actionStudoxCore,
+        subtitle: 'core.studox.eu',
+        icon: <Lightning size={14} weight="fill" style={{ color: 'var(--accent)' }} />,
+        action: () => {
+          setOmnibox(false)
+          openStudoxCore()
+        }
+      },
       {
         id: 'action-newtab',
         type: 'action',
-        title: 'New Tab',
-        subtitle: 'Open a new tab',
+        title: t.omnibox.actionNewTab,
+        subtitle: t.newtab.newTab,
         icon: <Plus size={14} className="opacity-40" />,
         action: () => {
           addTab()
@@ -128,8 +143,8 @@ export default function Omnibox(): JSX.Element {
       {
         id: 'action-settings',
         type: 'action',
-        title: 'Settings',
-        subtitle: 'Open browser settings',
+        title: t.omnibox.actionSettings,
+        subtitle: t.settings.title,
         icon: <Gear size={14} className="opacity-40" />,
         action: () => {
           useUIStore.getState().setSettings(true)
@@ -139,8 +154,8 @@ export default function Omnibox(): JSX.Element {
       {
         id: 'action-bookmarks',
         type: 'action',
-        title: 'Bookmarks',
-        subtitle: 'View all bookmarks',
+        title: t.omnibox.actionBookmarks,
+        subtitle: t.sidebar.bookmarks,
         icon: <BookmarkSimple size={14} className="opacity-40" />,
         action: () => {
           useUIStore.getState().setSidebar(true)
@@ -156,7 +171,7 @@ export default function Omnibox(): JSX.Element {
     items.push(...matchingActions)
 
     return items
-  }, [query, tabs, historyResults, bookmarkResults])
+  }, [query, tabs, historyResults, bookmarkResults, t, addTab, navigateTo, openStudoxCore, setOmnibox])
 
   // Reset selection on results change
   useEffect(() => {
@@ -232,7 +247,7 @@ export default function Omnibox(): JSX.Element {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Search tabs, history, bookmarks, or type a URL..."
+            placeholder={t.omnibox.placeholder}
             className="flex-1 bg-transparent border-none outline-none text-[14px] text-white/85
                        placeholder:text-white/20"
             style={{ fontFamily: 'var(--font-ui)', caretColor: 'var(--accent)' }}
@@ -264,24 +279,21 @@ export default function Omnibox(): JSX.Element {
                 <MagnifyingGlass size={14} className="opacity-40" />
               </div>
               <p className="text-[12px]" style={{ color: 'var(--text-tertiary)' }}>
-                No matches in tabs, history, or bookmarks
-              </p>
-              <p className="text-[10px]" style={{ color: 'var(--text-disabled)' }}>
-                Press <span style={{ color: 'var(--accent)' }}>Enter</span> to search the web
+                {t.omnibox.noResults}
               </p>
             </div>
           )}
           {results.length === 0 && !query.trim() && (
             <div className="px-3 py-6 text-center">
               <p className="text-[11px]" style={{ color: 'var(--text-disabled)' }}>
-                Start typing to search your tabs, history, and bookmarks
+                {t.omnibox.placeholder}
               </p>
             </div>
           )}
 
           {/* Group: Open Tabs */}
           {results.some((r) => r.type === 'tab') && (
-            <GroupLabel label="OPEN TABS" />
+            <GroupLabel label={t.omnibox.openTabs} />
           )}
           {results
             .filter((r) => r.type === 'tab')
@@ -297,7 +309,7 @@ export default function Omnibox(): JSX.Element {
 
           {/* Group: History */}
           {results.some((r) => r.type === 'history') && (
-            <GroupLabel label="HISTORY" />
+            <GroupLabel label={t.omnibox.history} />
           )}
           {results
             .filter((r) => r.type === 'history')
@@ -313,7 +325,7 @@ export default function Omnibox(): JSX.Element {
 
           {/* Group: Bookmarks */}
           {results.some((r) => r.type === 'bookmark') && (
-            <GroupLabel label="BOOKMARKS" />
+            <GroupLabel label={t.omnibox.bookmarks} />
           )}
           {results
             .filter((r) => r.type === 'bookmark')
@@ -329,7 +341,7 @@ export default function Omnibox(): JSX.Element {
 
           {/* Group: Actions */}
           {results.some((r) => r.type === 'action') && (
-            <GroupLabel label="ACTIONS" />
+            <GroupLabel label={t.omnibox.actions} />
           )}
           {results
             .filter((r) => r.type === 'action')

@@ -15,7 +15,7 @@ export default function Footer() {
             className="text-[10px] tracking-[0.2em]"
             style={{ color: 'var(--text-disabled)', fontFamily: 'var(--font-mono)' }}
           >
-            PORTAL OS v{process.env.NEXT_PUBLIC_VERSION || '1.0.1'}
+            PORTAL OS v{process.env.NEXT_PUBLIC_VERSION || '1.0.2'}
           </span>
         </div>
 

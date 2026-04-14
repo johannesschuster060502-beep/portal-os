@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowsClockwise, X } from '@phosphor-icons/react'
 import { springStandard } from '@lib/motion'
+import { useI18nStore } from '@store/i18n.store'
 
 type UpdateState = 'idle' | 'available' | 'downloading' | 'ready'
 
 export default function UpdateBar(): JSX.Element {
+  const t = useI18nStore((s) => s.t)
   const [state, setState] = useState<UpdateState>('idle')
   const [version, setVersion] = useState('')
   const [progress, setProgress] = useState(0)
@@ -61,13 +63,13 @@ export default function UpdateBar(): JSX.Element {
 
             {state === 'downloading' && (
               <span className="text-[11px]" style={{ color: 'var(--text-secondary)' }}>
-                Downloading Portal OS {version}... {progress}%
+                {t.updater.downloading} {version}... {progress}%
               </span>
             )}
 
             {state === 'ready' && (
               <span className="text-[11px]" style={{ color: 'var(--text-secondary)' }}>
-                Portal OS {version} is ready to install.
+                Portal OS {version} {t.updater.ready}
               </span>
             )}
           </div>
@@ -82,7 +84,7 @@ export default function UpdateBar(): JSX.Element {
                   color: '#fff'
                 }}
               >
-                Install & Restart
+                {t.updater.installAndRestart}
               </button>
             )}
 

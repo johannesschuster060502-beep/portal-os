@@ -6,6 +6,29 @@ import Footer from '@/components/Footer'
 
 const changelog = [
   {
+    version: '1.0.2',
+    date: '2025',
+    tag: 'STUDOX CORE + I18N + TAB GROUPS',
+    items: [
+      'STUDOX Core integration — dedicated button in the title bar with animated shimmer sweep',
+      'Cyberpunk glitch transition (2 sec) when opening core.studox.eu — RGB split, data stream terminal, scanlines, violet + cyan pulse',
+      'Hotkey Ctrl+Shift+S for instant STUDOX Core access',
+      'Full i18n system — English + German translations (150+ keys)',
+      'Time-based German greetings (GUTEN MORGEN / TAG / ABEND / NACHT)',
+      'Language picker in Settings > Languages',
+      'Tab Groups (Opera GX style) — 8 colors, collapse/expand, rename, context menu',
+      'Chrome-style Settings page — 10 sections with sidebar nav and live search',
+      'Settings: General, Appearance, Tabs, Privacy, Search, Downloads, Languages, Shortcuts, System, About',
+      'New shortcuts table with 20 keyboard combinations',
+      'Reset all settings to defaults with confirmation',
+      'Window drag fully fixed — proper drag-region cascade, no-drag children automatic',
+      'Tab bar empty space is draggable like Chrome',
+      'Favicon clipping fixed — active tab indicator moved to bottom underline (animated layoutId)',
+      'Status bar repositioned to true bottom, pointer-events-none, never overlaps content',
+      'STUDOX Core accessible from: title bar button, omnibox action, new tab page hero, hotkey'
+    ]
+  },
+  {
     version: '1.0.1',
     date: '2025',
     tag: 'SMOOTHNESS & CINEMATIC',

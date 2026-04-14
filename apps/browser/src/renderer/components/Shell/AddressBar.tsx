@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 import { motion } from 'framer-motion'
 import { Lock, Warning, MagnifyingGlass, X as XIcon, Star } from '@phosphor-icons/react'
 import { useTabsStore } from '@store/tabs.store'
+import { useI18nStore } from '@store/i18n.store'
 import { springSnappy, tapPress } from '@lib/motion'
 
 export default function AddressBar(): JSX.Element {
@@ -9,6 +10,7 @@ export default function AddressBar(): JSX.Element {
   const activeTabId = useTabsStore((s) => s.activeTabId)
   const navigateTo = useTabsStore((s) => s.navigateTo)
   const stopLoading = useTabsStore((s) => s.stopLoading)
+  const t = useI18nStore((s) => s.t)
 
   const activeTab = tabs.find((t) => t.id === activeTabId)
   const currentUrl = activeTab?.url || ''
@@ -124,12 +126,12 @@ export default function AddressBar(): JSX.Element {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
-          placeholder="Search or enter URL"
+          placeholder={t.address.placeholder}
           className="flex-1 bg-transparent border-none outline-none text-[12px] text-white/80
                      placeholder:text-white/20"
           style={{ fontFamily: 'var(--font-ui)', caretColor: 'var(--accent)' }}
           role="combobox"
-          aria-label="Address bar"
+          aria-label={t.address.placeholder}
           aria-expanded={false}
           spellCheck={false}
           autoComplete="off"
@@ -157,7 +159,7 @@ export default function AddressBar(): JSX.Element {
           <motion.button
             onClick={toggleBookmark}
             className="shrink-0 opacity-30 hover:opacity-80 transition-opacity"
-            aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+            aria-label={isBookmarked ? t.address.removeBookmark : t.address.addBookmark}
             whileTap={tapPress}
             whileHover={{ scale: 1.15 }}
             transition={springSnappy}

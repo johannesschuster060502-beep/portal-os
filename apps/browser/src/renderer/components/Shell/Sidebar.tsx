@@ -9,6 +9,7 @@ import {
 } from '@phosphor-icons/react'
 import { useUIStore } from '@store/ui.store'
 import { useTabsStore } from '@store/tabs.store'
+import { useI18nStore } from '@store/i18n.store'
 import Favicon from '@components/Common/Favicon'
 
 type SidebarSection = 'bookmarks' | 'history'
@@ -32,6 +33,7 @@ interface BookmarkItem {
 export default function Sidebar(): JSX.Element {
   const setSidebar = useUIStore((s) => s.setSidebar)
   const navigateTo = useTabsStore((s) => s.navigateTo)
+  const t = useI18nStore((s) => s.t)
   const [section, setSection] = useState<SidebarSection>('bookmarks')
   const [bookmarks, setBookmarks] = useState<BookmarkItem[]>([])
   const [history, setHistory] = useState<HistoryItem[]>([])
@@ -64,20 +66,20 @@ export default function Sidebar(): JSX.Element {
             active={section === 'bookmarks'}
             onClick={() => setSection('bookmarks')}
             icon={<Star size={12} />}
-            label="Bookmarks"
+            label={t.sidebar.bookmarks}
           />
           <SectionTab
             active={section === 'history'}
             onClick={() => setSection('history')}
             icon={<ClockCounterClockwise size={12} />}
-            label="History"
+            label={t.sidebar.history}
           />
         </div>
         <button
           onClick={() => setSidebar(false)}
           className="w-6 h-6 flex items-center justify-center rounded-md opacity-30
                      hover:opacity-70 hover:bg-white/5 transition-all"
-          aria-label="Close sidebar"
+          aria-label={t.common.close}
         >
           <X size={12} />
         </button>
@@ -88,7 +90,7 @@ export default function Sidebar(): JSX.Element {
         {section === 'bookmarks' && (
           <>
             {bookmarks.length === 0 ? (
-              <EmptyState text="No bookmarks yet" sub="Press Ctrl+D to bookmark a page" />
+              <EmptyState text={t.sidebar.noBookmarks} sub={t.sidebar.noBookmarksHint} />
             ) : (
               bookmarks.map((bm) => (
                 <SidebarItem
@@ -107,7 +109,7 @@ export default function Sidebar(): JSX.Element {
         {section === 'history' && (
           <>
             {history.length === 0 ? (
-              <EmptyState text="No history yet" sub="Start browsing to build history" />
+              <EmptyState text={t.sidebar.noHistory} sub={t.sidebar.noHistoryHint} />
             ) : (
               history.map((h) => (
                 <SidebarItem

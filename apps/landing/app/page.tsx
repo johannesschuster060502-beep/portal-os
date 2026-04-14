@@ -138,7 +138,7 @@ export default function Home() {
                 color: 'var(--accent)'
               }}
             >
-              v1.0.1 — BUILT BY JOHANNESAFK
+              v1.0.2 — BUILT BY JOHANNESAFK · STUDOX
             </span>
             <div
               className="h-px w-12"
