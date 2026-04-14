@@ -2,6 +2,14 @@
 module.exports = {
   content: ['./src/renderer/**/*.{js,ts,jsx,tsx,html}'],
   theme: {
+    // Custom breakpoints tuned for Electron window (min 900px, max ultrawide)
+    screens: {
+      sm: '960px',   // compact (small laptop)
+      md: '1200px',  // default desktop
+      lg: '1600px',  // widescreen
+      xl: '2000px',  // ultrawide
+      '2xl': '2560px' // 4K+
+    },
     extend: {
       colors: {
         void: '#050505',

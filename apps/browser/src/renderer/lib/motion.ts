@@ -24,12 +24,20 @@ export const springStandard: Transition = {
   mass: 1
 }
 
-/** Elastic — tab open/close, satisfying moments with slight overshoot */
+/** Elastic — tab open, satisfying moments with slight overshoot */
 export const springElastic: Transition = {
   type: 'spring',
-  stiffness: 320,
-  damping: 22,
-  mass: 1
+  stiffness: 380,
+  damping: 26,
+  mass: 0.9
+}
+
+/** Quick — tab close, fast collapse without bounce */
+export const springQuick: Transition = {
+  type: 'spring',
+  stiffness: 700,
+  damping: 42,
+  mass: 0.5
 }
 
 /** Slow — boot sequences, scene transitions, deliberate moments */
@@ -49,11 +57,11 @@ export const overlayVariants: Variants = {
   exit: { opacity: 0, y: -4, scale: 0.98 }
 }
 
-/** Tab entry/exit — elastic width collapse */
+/** Tab entry — elastic open, cleaner exit driven by layout prop */
 export const tabVariants: Variants = {
-  hidden: { scale: 0.9, opacity: 0, width: 0, marginRight: 0 },
+  hidden: { scale: 0.85, opacity: 0, width: 0, paddingLeft: 0, paddingRight: 0, marginRight: 0 },
   visible: { scale: 1, opacity: 1, width: 'auto', marginRight: 2 },
-  exit: { scale: 0.85, opacity: 0, width: 0, marginRight: 0 }
+  exit: { scale: 0.9, opacity: 0, width: 0, paddingLeft: 0, paddingRight: 0, marginRight: 0 }
 }
 
 /** Slide-up bars (DownloadBar, UpdateBar, FindBar) */

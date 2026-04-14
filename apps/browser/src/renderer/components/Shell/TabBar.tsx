@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, Plus, SpeakerHigh, SpeakerSlash } from '@phosphor-icons/react'
 import { useTabsStore, TabState } from '@store/tabs.store'
 import Favicon from '@components/Common/Favicon'
-import { springElastic, springSnappy, tabVariants, tapPress } from '@lib/motion'
+import { springElastic, springQuick, springSnappy, tabVariants, tapPress } from '@lib/motion'
 
 export default function TabBar(): JSX.Element {
   const tabs = useTabsStore((s) => s.tabs)
@@ -16,14 +16,16 @@ export default function TabBar(): JSX.Element {
 
   return (
     <div
-      className="flex items-center h-9 px-1 shrink-0 overflow-x-auto"
+      className="flex items-center h-9 shrink-0 overflow-x-auto overflow-y-hidden"
       style={{
         background: 'var(--bg-void)',
         borderBottom: '1px solid var(--border-dim)',
-        scrollbarWidth: 'none'
+        scrollbarWidth: 'none',
+        paddingLeft: 'clamp(4px, 0.4vw, 8px)',
+        paddingRight: 'clamp(4px, 0.4vw, 8px)'
       }}
     >
-      <AnimatePresence initial={false}>
+      <AnimatePresence initial={false} mode="popLayout">
         {tabs.map((tab) => (
           <Tab key={tab.id} tab={tab} isActive={tab.id === activeTabId} />
         ))}
@@ -93,12 +95,16 @@ const Tab = memo(function Tab({
   return (
     <>
       <motion.div
-        layout
+        layout="position"
         variants={tabVariants}
         initial="hidden"
         animate="visible"
         exit="exit"
-        transition={springElastic}
+        transition={{
+          default: springQuick,
+          scale: springElastic,
+          layout: springQuick
+        }}
         whileHover={!isActive ? { y: -1 } : undefined}
         onClick={onActivate}
         onContextMenu={handleContextMenu}

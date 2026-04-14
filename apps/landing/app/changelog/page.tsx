@@ -6,6 +6,26 @@ import Footer from '@/components/Footer'
 
 const changelog = [
   {
+    version: '1.0.1',
+    date: '2025',
+    tag: 'SMOOTHNESS & CINEMATIC',
+    items: [
+      'Tab close is now buttery-smooth — new springQuick (700/42/0.5) for exit, layout="position" reflow, AnimatePresence popLayout mode',
+      'New tab page redesigned — time-based greeting, violet radial glow behind clock, staggered entrance animations',
+      'Search bar scales + glows on focus with box-shadow spring',
+      'Quick links have animated diagonal shimmer on hover',
+      'Status bar anchored to bottom — footer never overlaps content again',
+      'Three.js scene upgraded — added torus knot with breathing scale, dual particle fields (near 8000 + far 2000), ambient violet point light, fog for depth',
+      'Slow auto-drift camera — subtle cinematic breath independent of mouse',
+      'Fully responsive — clamp() sizing from 900px to 5120px (4K/ultrawide)',
+      'Custom Tailwind breakpoints tuned for Electron (sm:960 md:1200 lg:1600 xl:2000 2xl:2560)',
+      'Landing page hero title scales from 56px to 180px responsively',
+      'Navbar with mobile hamburger menu for small viewports',
+      'Scroll-triggered opacity + scale parallax on hero section',
+      'Sheen animation on primary download button'
+    ]
+  },
+  {
     version: '1.0.0',
     date: '2025',
     tag: 'INITIAL RELEASE',

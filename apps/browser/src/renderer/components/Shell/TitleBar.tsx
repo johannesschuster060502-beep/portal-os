@@ -20,23 +20,26 @@ export default function TitleBar(): JSX.Element {
 
   return (
     <div
-      className="drag-region flex items-center h-10 px-3 gap-2 shrink-0"
+      className="drag-region flex items-center h-10 shrink-0"
       style={{
         background: 'rgba(8,8,8,0.9)',
         backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid var(--border-dim)'
+        borderBottom: '1px solid var(--border-dim)',
+        paddingLeft: 'clamp(10px, 1vw, 16px)',
+        paddingRight: 'clamp(0px, 0.5vw, 8px)',
+        gap: 'clamp(6px, 0.8vw, 12px)'
       }}
     >
       {/* macOS traffic lights placeholder */}
       {isMac && <div className="w-16 shrink-0" />}
 
       {/* Logo */}
-      <div className="no-drag flex items-center gap-2 shrink-0 mr-2">
+      <div className="no-drag flex items-center gap-2 shrink-0 mr-1">
         <span className="text-sm opacity-60" style={{ fontFamily: 'var(--font-mono)' }}>
           ⬡
         </span>
         <span
-          className="text-[11px] tracking-[0.12em] opacity-40 hidden sm:inline"
+          className="text-[11px] tracking-[0.12em] opacity-40 hidden md:inline"
           style={{ fontFamily: 'var(--font-mono)' }}
         >
           PORTAL OS
@@ -48,9 +51,14 @@ export default function TitleBar(): JSX.Element {
         <NavControls />
       </div>
 
-      {/* Address bar — takes remaining space */}
-      <div className="no-drag flex-1 mx-2">
-        <AddressBar />
+      {/* Address bar — takes remaining space with responsive max-width */}
+      <div
+        className="no-drag flex-1 flex justify-center"
+        style={{ minWidth: 0 }}
+      >
+        <div className="w-full" style={{ maxWidth: 'clamp(320px, 60vw, 880px)' }}>
+          <AddressBar />
+        </div>
       </div>
 
       {/* Window controls — Windows/Linux only */}
