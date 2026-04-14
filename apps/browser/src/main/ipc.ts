@@ -27,6 +27,7 @@ import {
   bindWindowResize
 } from './tabs'
 import { getDownloads, clearDownloads, cancelDownload, openDownloadedFile, showDownloadInFolder } from './downloads'
+import { listExtensions, installExtensionById, loadUnpackedExtension, removeExtension } from './extensions'
 import {
   getHistory,
   searchHistory,
@@ -242,6 +243,23 @@ export function registerIpcHandlers(): void {
 
   ipcMain.on('downloads:showInFolder', (_e, savePath: string) => {
     showDownloadInFolder(sanitizeString(savePath))
+  })
+
+  // ── Extensions ──
+  ipcMain.handle('extensions:list', () => {
+    return listExtensions()
+  })
+
+  ipcMain.handle('extensions:install', (_e, extensionId: string) => {
+    return installExtensionById(sanitizeString(extensionId))
+  })
+
+  ipcMain.handle('extensions:loadUnpacked', () => {
+    return loadUnpackedExtension()
+  })
+
+  ipcMain.handle('extensions:remove', (_e, id: string) => {
+    return removeExtension(sanitizeString(id))
   })
 
   // ── Settings ──

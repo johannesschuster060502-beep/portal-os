@@ -19,6 +19,7 @@ const FindBar = lazy(() => import('@components/Overlays/FindBar'))
 const DownloadBar = lazy(() => import('@components/Overlays/DownloadBar'))
 const UpdateBar = lazy(() => import('@components/Overlays/UpdateBar'))
 const StudoxCoreOverlay = lazy(() => import('@components/Overlays/StudoxCoreOverlay'))
+const ExtensionsPanel = lazy(() => import('@components/Overlays/ExtensionsPanel'))
 
 export default function App(): JSX.Element {
   const booted = useUIStore((s) => s.booted)
@@ -27,6 +28,7 @@ export default function App(): JSX.Element {
   const historyOpen = useUIStore((s) => s.historyOpen)
   const sidebarOpen = useUIStore((s) => s.sidebarOpen)
   const findOpen = useUIStore((s) => s.findOpen)
+  const extensionsOpen = useUIStore((s) => s.extensionsOpen)
   const activeTabId = useTabsStore((s) => s.activeTabId)
   const tabs = useTabsStore((s) => s.tabs)
   const setTabs = useTabsStore((s) => s.setTabs)
@@ -141,6 +143,13 @@ export default function App(): JSX.Element {
             </AnimatePresence>
             <AnimatePresence>
               {historyOpen && <HistoryPanel key="history" />}
+            </AnimatePresence>
+          </Suspense>
+
+          {/* Extensions panel */}
+          <Suspense fallback={null}>
+            <AnimatePresence>
+              {extensionsOpen && <ExtensionsPanel key="extensions" />}
             </AnimatePresence>
           </Suspense>
 

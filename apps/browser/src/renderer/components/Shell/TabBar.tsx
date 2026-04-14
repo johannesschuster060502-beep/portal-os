@@ -5,7 +5,6 @@ import {
   Plus,
   SpeakerHigh,
   SpeakerSlash,
-  CaretRight,
   Folder,
   FolderOpen
 } from '@phosphor-icons/react'

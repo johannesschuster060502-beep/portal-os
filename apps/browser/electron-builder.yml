@@ -1,7 +1,7 @@
 appId: com.portalos.browser
 productName: Portal OS
-copyright: "Copyright © 2025 JohannesAFK (StudoX). All rights reserved."
-buildVersion: "1.0.0"
+copyright: "Copyright © 2025-2026 JohannesAFK (StudoX). All rights reserved."
+buildVersion: "1.0.4"
 
 directories:
   buildResources: resources

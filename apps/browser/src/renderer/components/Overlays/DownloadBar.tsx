@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, Check, Warning, ArrowDown, FolderOpen, File } from '@phosphor-icons/react'
 import { springStandard } from '@lib/motion'
 import { useI18nStore } from '@store/i18n.store'
+import { useUIStore } from '@store/ui.store'
 
 function formatBytes(bytes: number): string {
   if (bytes <= 0) return '—'
@@ -27,14 +28,22 @@ function formatTime(seconds: number): string {
 
 export default function DownloadBar(): JSX.Element {
   const { t } = useI18nStore()
+  const downloadsOpen = useUIStore((s) => s.downloadsOpen)
+  const setDownloadsOpen = useUIStore((s) => s.setDownloadsOpen)
+  const setActiveDownloadsCount = useUIStore((s) => s.setActiveDownloadsCount)
   const [downloads, setDownloads] = useState<DownloadItem[]>([])
-  const [visible, setVisible] = useState(false)
+
+  // Sync active count to store whenever downloads list changes
+  useEffect(() => {
+    const active = downloads.filter((d) => d.state === 'progressing').length
+    setActiveDownloadsCount(active)
+  }, [downloads, setActiveDownloadsCount])
 
   useEffect(() => {
     window.portalOS.downloads.getAll().then((items) => {
       if (items.length > 0) {
         setDownloads(items)
-        setVisible(true)
+        setDownloadsOpen(true)
       }
     })
 
@@ -43,7 +52,7 @@ export default function DownloadBar(): JSX.Element {
         if (prev.find((d) => d.id === dl.id)) return prev
         return [dl, ...prev]
       })
-      setVisible(true)
+      setDownloadsOpen(true)
     })
 
     const unsubProgress = window.portalOS.downloads.onProgress((dl) => {
@@ -59,7 +68,7 @@ export default function DownloadBar(): JSX.Element {
       unsubProgress()
       unsubDone()
     }
-  }, [])
+  }, [setDownloadsOpen])
 
   function handleClearDone(): void {
     window.portalOS.downloads.clear()
@@ -85,7 +94,7 @@ export default function DownloadBar(): JSX.Element {
 
   return (
     <AnimatePresence>
-      {visible && downloads.length > 0 && (
+      {downloadsOpen && downloads.length > 0 && (
         <motion.div
           className="absolute bottom-0 left-0 right-0 z-[40]"
           style={{
@@ -119,7 +128,7 @@ export default function DownloadBar(): JSX.Element {
               </button>
             )}
             <button
-              onClick={() => setVisible(false)}
+              onClick={() => setDownloadsOpen(false)}
               className="w-5 h-5 flex items-center justify-center rounded opacity-30 hover:opacity-70 hover:bg-white/5 transition-all shrink-0"
               aria-label="Close"
             >

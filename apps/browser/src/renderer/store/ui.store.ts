@@ -8,6 +8,10 @@ interface UIStore {
   settingsOpen: boolean
   historyOpen: boolean
   findOpen: boolean
+  downloadsOpen: boolean
+  extensionsOpen: boolean
+  // Count of in-progress downloads (for badge on toolbar button)
+  activeDownloadsCount: number
   isMaximized: boolean
   // STUDOX Core cyberpunk transition
   studoxTransitioning: boolean
@@ -25,18 +29,26 @@ interface UIStore {
   setHistoryOpen: (open: boolean) => void
   toggleFind: () => void
   setFindOpen: (open: boolean) => void
+  toggleDownloads: () => void
+  setDownloadsOpen: (open: boolean) => void
+  setActiveDownloadsCount: (count: number) => void
+  toggleExtensions: () => void
+  setExtensionsOpen: (open: boolean) => void
   setMaximized: (maximized: boolean) => void
   openStudoxCore: () => void
   setStudoxTransitioning: (v: boolean) => void
 }
 
-export const useUIStore = create<UIStore>((set, get) => ({
+export const useUIStore = create<UIStore>((set) => ({
   booted: false,
   sidebarOpen: false,
   omniboxOpen: false,
   settingsOpen: false,
   historyOpen: false,
   findOpen: false,
+  downloadsOpen: false,
+  extensionsOpen: false,
+  activeDownloadsCount: 0,
   isMaximized: false,
   studoxTransitioning: false,
   settingsSection: 'general',
@@ -60,6 +72,11 @@ export const useUIStore = create<UIStore>((set, get) => ({
   setHistoryOpen: (open) => set({ historyOpen: open }),
   toggleFind: () => set((s) => ({ findOpen: !s.findOpen })),
   setFindOpen: (open) => set({ findOpen: open }),
+  toggleDownloads: () => set((s) => ({ downloadsOpen: !s.downloadsOpen })),
+  setDownloadsOpen: (open) => set({ downloadsOpen: open }),
+  setActiveDownloadsCount: (count) => set({ activeDownloadsCount: count }),
+  toggleExtensions: () => set((s) => ({ extensionsOpen: !s.extensionsOpen })),
+  setExtensionsOpen: (open) => set({ extensionsOpen: open }),
   setMaximized: (maximized) => set({ isMaximized: maximized }),
 
   openStudoxCore: () => {

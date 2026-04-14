@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import { Minus, Square, CornersOut, X, Lightning, GearSix } from '@phosphor-icons/react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Minus, Square, CornersOut, X, Lightning, GearSix, ArrowDown, PuzzlePiece } from '@phosphor-icons/react'
 import AddressBar from './AddressBar'
 import NavControls from './NavControls'
 import { useI18nStore } from '@store/i18n.store'
@@ -13,6 +13,11 @@ export default function TitleBar(): JSX.Element {
   const t = useI18nStore((s) => s.t)
   const openStudox = useUIStore((s) => s.openStudoxCore)
   const toggleSettings = useUIStore((s) => s.toggleSettings)
+  const toggleDownloads = useUIStore((s) => s.toggleDownloads)
+  const toggleExtensions = useUIStore((s) => s.toggleExtensions)
+  const activeDownloadsCount = useUIStore((s) => s.activeDownloadsCount)
+  const downloadsOpen = useUIStore((s) => s.downloadsOpen)
+  const extensionsOpen = useUIStore((s) => s.extensionsOpen)
 
   useEffect(() => {
     window.portalOS.shell.isMaximized().then(setIsMaximized)
@@ -33,10 +38,9 @@ export default function TitleBar(): JSX.Element {
       }}
     >
       {/* ── LEFT SIDE ── */}
-      {/* macOS traffic lights placeholder */}
       {isMac && <div className="w-16 shrink-0 drag-region" />}
 
-      {/* STUDOX Core button — prominent, leftmost */}
+      {/* STUDOX Core button */}
       <motion.button
         onClick={openStudox}
         className="no-drag flex items-center gap-2 shrink-0 rounded-lg mr-2 relative overflow-hidden group"
@@ -58,7 +62,6 @@ export default function TitleBar(): JSX.Element {
         aria-label={t.studox.coreButtonLabel}
         title={t.studox.coreButtonLabel}
       >
-        {/* Shimmer sweep */}
         <motion.span
           aria-hidden
           className="absolute inset-0 pointer-events-none"
@@ -90,16 +93,74 @@ export default function TitleBar(): JSX.Element {
       </div>
 
       {/* ── CENTER: Address bar ── */}
-      <div
-        className="no-drag flex-1 flex justify-center px-2"
-        style={{ minWidth: 0 }}
-      >
+      <div className="no-drag flex-1 flex justify-center px-2" style={{ minWidth: 0 }}>
         <div className="w-full" style={{ maxWidth: 'clamp(320px, 58vw, 860px)' }}>
           <AddressBar />
         </div>
       </div>
 
       {/* ── RIGHT SIDE ── */}
+
+      {/* Extensions button — puzzle piece icon, like Chrome */}
+      <motion.button
+        onClick={() => toggleExtensions()}
+        className="no-drag w-9 h-9 flex items-center justify-center rounded-lg shrink-0 transition-colors relative"
+        style={{
+          opacity: extensionsOpen ? 1 : undefined,
+          background: extensionsOpen ? 'rgba(124,106,247,0.12)' : undefined,
+          color: extensionsOpen ? 'var(--accent)' : undefined
+        }}
+        aria-label={t.extensions?.title ?? 'Extensions'}
+        title={t.extensions?.title ?? 'Extensions'}
+        whileTap={tapPress}
+        transition={springSnappy}
+      >
+        <PuzzlePiece
+          size={15}
+          className={extensionsOpen ? '' : 'opacity-50 hover:opacity-90'}
+          weight={extensionsOpen ? 'fill' : 'regular'}
+        />
+      </motion.button>
+
+      {/* Downloads button — arrow-down icon with optional active badge */}
+      <motion.button
+        onClick={() => toggleDownloads()}
+        className="no-drag w-9 h-9 flex items-center justify-center rounded-lg shrink-0 transition-colors relative mr-1"
+        style={{
+          opacity: downloadsOpen ? 1 : undefined,
+          background: downloadsOpen ? 'rgba(124,106,247,0.12)' : undefined,
+          color: downloadsOpen ? 'var(--accent)' : undefined
+        }}
+        aria-label={t.sidebar?.downloads ?? 'Downloads'}
+        title={t.sidebar?.downloads ?? 'Downloads'}
+        whileTap={tapPress}
+        transition={springSnappy}
+      >
+        <ArrowDown
+          size={15}
+          className={downloadsOpen ? '' : 'opacity-50 hover:opacity-90'}
+          weight={downloadsOpen ? 'bold' : 'regular'}
+        />
+        {/* Active download badge */}
+        <AnimatePresence>
+          {activeDownloadsCount > 0 && (
+            <motion.span
+              key="badge"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              className="absolute top-1.5 right-1.5 rounded-full flex items-center justify-center"
+              style={{
+                width: 8,
+                height: 8,
+                background: 'var(--accent)',
+                boxShadow: '0 0 6px rgba(124,106,247,0.8)'
+              }}
+            />
+          )}
+        </AnimatePresence>
+      </motion.button>
+
       {/* Settings cog */}
       <motion.button
         onClick={() => toggleSettings()}

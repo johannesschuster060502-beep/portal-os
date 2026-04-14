@@ -88,7 +88,7 @@ export interface Translations {
 //  SHARED CONSTANTS
 // ─────────────────────────────────────────────
 
-const VERSION = process.env.NEXT_PUBLIC_VERSION || '1.0.3'
+const VERSION = process.env.NEXT_PUBLIC_VERSION || '1.0.4'
 const BASE =
   process.env.NEXT_PUBLIC_DOWNLOAD_BASE_URL ||
   'https://github.com/johannesschuster060502-beep/portal-os-releases/releases/latest/download'
@@ -233,6 +233,19 @@ const de: Translations = {
     eyebrow: 'CHANGELOG',
     title: 'Was ist neu',
     releases: [
+      {
+        version: '1.0.4',
+        date: '2026',
+        tag: 'ERWEITERUNGEN · DOWNLOAD-BUTTON · STUDOX INSTALLER',
+        items: [
+          'Chrome-Erweiterungen direkt im Browser installierbar — Chrome Web Store URL einfügen oder entpackten Ordner laden',
+          'Download-Icon in der Titelleiste (wie Chrome) — zeigt aktive Downloads per Badge und öffnet Download-Panel per Klick',
+          'Erweiterungs-Icon in der Titelleiste (Puzzle-Symbol) — alle installierten Erweiterungen auf einen Blick',
+          'Windows-Installer komplett neu gestaltet — StudoX-Branding, dunkles Design, Portal OS Logo mit Farbverlauf',
+          'Installer-Seitenleiste und Header jetzt mit StudoX-Signatur "by StudoX" und Fokus-Tagline',
+          'Erweiterungen werden beim Start automatisch geladen und bleiben über Neustarts hinweg erhalten'
+        ]
+      },
       {
         version: '1.0.3',
         date: '2025',
@@ -444,6 +457,19 @@ const en: Translations = {
     eyebrow: 'CHANGELOG',
     title: "What's New",
     releases: [
+      {
+        version: '1.0.4',
+        date: '2026',
+        tag: 'EXTENSIONS · DOWNLOAD BUTTON · STUDOX INSTALLER',
+        items: [
+          'Chrome extensions installable directly in the browser — paste a Chrome Web Store URL or load an unpacked folder',
+          'Download icon in the title bar (like Chrome) — shows active downloads with a badge, opens download panel on click',
+          'Extensions icon in the title bar (puzzle piece) — all installed extensions at a glance',
+          'Windows installer completely redesigned — StudoX branding, dark design, Portal OS logo with gradient',
+          'Installer sidebar and header now feature StudoX signature "by StudoX" and focus tagline',
+          'Extensions load automatically on startup and persist across restarts'
+        ]
+      },
       {
         version: '1.0.3',
         date: '2025',

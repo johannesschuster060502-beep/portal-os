@@ -80,7 +80,7 @@ export default function Footer() {
             className="tracking-[0.2em]"
             style={{ color: 'var(--text-disabled)', fontFamily: 'var(--font-mono)', fontSize: 'clamp(9px, 0.7vw, 10px)' }}
           >
-            v{process.env.NEXT_PUBLIC_VERSION || '1.0.3'} · MIT LICENSE · OPEN SOURCE
+            v{process.env.NEXT_PUBLIC_VERSION || '1.0.4'} · MIT LICENSE · OPEN SOURCE
           </div>
         </div>
       </div>

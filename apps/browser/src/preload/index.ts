@@ -74,6 +74,15 @@ const api = {
     }
   },
 
+  // ── Extensions ──
+  extensions: {
+    list: (): Promise<unknown[]> => ipcRenderer.invoke('extensions:list'),
+    install: (extensionId: string): Promise<unknown> =>
+      ipcRenderer.invoke('extensions:install', extensionId),
+    loadUnpacked: (): Promise<unknown> => ipcRenderer.invoke('extensions:loadUnpacked'),
+    remove: (id: string): Promise<void> => ipcRenderer.invoke('extensions:remove', id)
+  },
+
   // ── Window shell ──
   shell: {
     minimize: (): void => ipcRenderer.send('shell:minimize'),

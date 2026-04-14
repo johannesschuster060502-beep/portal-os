@@ -5,6 +5,7 @@ import { registerIpcHandlers, bindWindowEvents } from './ipc'
 import { initDatabase } from './db'
 import { initUpdater } from './updater'
 import { initDownloadHandler } from './downloads'
+import { loadAllExtensions } from './extensions'
 
 app.setName('Portal OS')
 
@@ -70,6 +71,7 @@ app.whenReady().then(() => {
   initDatabase()
   registerIpcHandlers()
   initDownloadHandler()
+  loadAllExtensions().catch((e) => console.error('[extensions] init failed:', e))
 
   const mainWindow = createWindow()
 

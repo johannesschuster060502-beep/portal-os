@@ -265,6 +265,20 @@ export interface Translations {
     off: string
     version: string
   }
+
+  // Extensions panel
+  extensions: {
+    title: string
+    loadUnpacked: string
+    inputPlaceholder: string
+    install: string
+    installed: string
+    remove: string
+    empty: string
+    emptyHint: string
+    installing: string
+    storeUrlHint: string
+  }
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -480,6 +494,18 @@ const en: Translations = {
     on: 'On',
     off: 'Off',
     version: 'Version'
+  },
+  extensions: {
+    title: 'Extensions',
+    loadUnpacked: 'Load unpacked folder',
+    inputPlaceholder: 'Chrome Web Store URL or extension ID',
+    install: 'Install',
+    installed: 'Installed',
+    remove: 'Remove',
+    empty: 'No extensions installed',
+    emptyHint: 'Paste a Chrome Web Store URL or load an unpacked folder',
+    installing: 'Installing…',
+    storeUrlHint: 'e.g. https://chromewebstore.google.com/detail/.../abcdef…'
   }
 }
 
@@ -696,6 +722,18 @@ const de: Translations = {
     on: 'An',
     off: 'Aus',
     version: 'Version'
+  },
+  extensions: {
+    title: 'Erweiterungen',
+    loadUnpacked: 'Entpackten Ordner laden',
+    inputPlaceholder: 'Chrome Web Store URL oder Extension-ID',
+    install: 'Installieren',
+    installed: 'Installiert',
+    remove: 'Entfernen',
+    empty: 'Keine Erweiterungen installiert',
+    emptyHint: 'Chrome Web Store URL einfügen oder Ordner laden',
+    installing: 'Wird installiert…',
+    storeUrlHint: 'z.B. https://chromewebstore.google.com/detail/.../abcdef…'
   }
 }
 
