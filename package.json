@@ -1,0 +1,30 @@
+{
+  "name": "portal-os",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portal OS — Immersive Chromium-Based Desktop Browser",
+  "author": "JohannesAFK (StudoX)",
+  "license": "MIT",
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean",
+    "license-check": "pnpm --filter browser exec npx license-checker --onlyAllow 'MIT;Apache-2.0;BSD-2-Clause;BSD-3-Clause;ISC;0BSD;CC0-1.0;Unlicense;Python-2.0;BlueOak-1.0.0'",
+    "version:patch": "cd apps/browser && npm version patch --no-git-tag-version && cd ../.. && npm version patch --no-git-tag-version",
+    "version:minor": "cd apps/browser && npm version minor --no-git-tag-version && cd ../.. && npm version minor --no-git-tag-version",
+    "version:major": "cd apps/browser && npm version major --no-git-tag-version && cd ../.. && npm version major --no-git-tag-version"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "electron",
+      "esbuild",
+      "sharp"
+    ]
+  },
+  "devDependencies": {
+    "turbo": "^2.5.0"
+  }
+}

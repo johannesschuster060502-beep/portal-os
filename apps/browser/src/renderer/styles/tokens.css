@@ -1,0 +1,54 @@
+:root {
+  /* Background layers */
+  --bg-void: #050505;
+  --bg-base: #080808;
+  --bg-surface: #0d0d0d;
+  --bg-elevated: #111111;
+  --bg-overlay: rgba(10, 10, 10, 0.92);
+
+  /* Borders */
+  --border-dim: rgba(255, 255, 255, 0.05);
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-mid: rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --border-focus: rgba(124, 106, 247, 0.6);
+
+  /* Text */
+  --text-primary: rgba(255, 255, 255, 0.92);
+  --text-secondary: rgba(255, 255, 255, 0.50);
+  --text-tertiary: rgba(255, 255, 255, 0.28);
+  --text-disabled: rgba(255, 255, 255, 0.15);
+
+  /* Accent — Portal Violet */
+  --accent: #7c6af7;
+  --accent-dim: rgba(124, 106, 247, 0.15);
+  --accent-hover: #9585f9;
+
+  /* Semantic */
+  --success: #27C93F;
+  --warning: #FFBD2E;
+  --danger: #FF5F56;
+
+  /* Glass effect */
+  --glass-bg: rgba(8, 8, 8, 0.85);
+  --glass-blur: 16px;
+
+  /* Geometry */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --font-display: 'SF Pro Display', -apple-system, sans-serif;
+
+  /* Timing */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 120ms;
+  --duration-mid: 220ms;
+  --duration-slow: 400ms;
+}

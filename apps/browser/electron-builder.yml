@@ -1,0 +1,112 @@
+appId: com.portalos.browser
+productName: Portal OS
+copyright: "Copyright © 2025 JohannesAFK (StudoX). All rights reserved."
+buildVersion: "1.0.0"
+
+directories:
+  buildResources: resources
+  output: release
+
+files:
+  - "out/**/*"
+  - "package.json"
+  - "!**/*.map"
+  - "!**/*.ts"
+
+asarUnpack:
+  - "**/node_modules/better-sqlite3/**/*"
+  - "**/node_modules/bindings/**/*"
+  - "**/node_modules/file-uri-to-path/**/*"
+
+extraResources:
+  - from: "../../LICENSES"
+    to: "LICENSES"
+
+# ── Windows ──
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: resources/icon.ico
+  executableName: "Portal OS"
+  requestedExecutionLevel: asInvoker
+  artifactName: "Portal-OS-Setup-${version}.${ext}"
+  # Code signing — set CSC_LINK and CSC_KEY_PASSWORD in CI env
+  # signingHashAlgorithms:
+  #   - sha256
+
+nsis:
+  oneClick: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  perMachine: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  runAfterFinish: true
+  shortcutName: "Portal OS"
+  uninstallDisplayName: "Portal OS"
+  license: "../../LICENSES/ELECTRON_LICENSE.txt"
+  artifactName: "Portal-OS-Setup-${version}.${ext}"
+  installerIcon: resources/icon.ico
+  uninstallerIcon: resources/icon.ico
+  installerHeaderIcon: resources/icon.ico
+  installerSidebar: resources/installer-sidebar.bmp
+  uninstallerSidebar: resources/installer-sidebar.bmp
+  installerHeader: resources/installer-header.bmp
+  include: installer/custom.nsh
+  deleteAppDataOnUninstall: false
+
+# ── macOS ──
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  icon: resources/icon.icns
+  category: public.app-category.productivity
+  artifactName: "Portal-OS-${version}-${arch}.${ext}"
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: resources/entitlements.mac.plist
+  entitlementsInherit: resources/entitlements.mac.plist
+  # Notarization — set APPLE_ID, APPLE_APP_SPECIFIC_PASSWORD, APPLE_TEAM_ID in CI env
+  # notarize:
+  #   teamId: YOUR_TEAM_ID
+
+dmg:
+  backgroundColor: "#050505"
+  window:
+    width: 540
+    height: 380
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+
+# ── Linux ──
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+  icon: resources/icons
+  category: Network
+  desktop:
+    Name: Portal OS
+    Comment: Immersive Chromium-Based Desktop Browser
+    Terminal: false
+  artifactName: "Portal-OS-${version}-${arch}.${ext}"
+
+afterSign: scripts/notarize.js
+
+# ── Auto-update ──
+publish:
+  provider: github
+  owner: johannesschuster060502-beep
+  repo: portal-os-releases
+  releaseType: release
