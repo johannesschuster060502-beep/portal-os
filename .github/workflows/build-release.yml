@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -40,7 +41,7 @@ jobs:
         working-directory: apps/browser
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Windows code signing (optional — set in repo secrets)
+          # Windows code signing (optional - set in repo secrets)
           # CSC_LINK: ${{ secrets.WINDOWS_CERTIFICATE }}
           # CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
         run: npx electron-builder --win --publish=always
@@ -83,7 +84,7 @@ jobs:
         working-directory: apps/browser
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # macOS code signing + notarization (optional — set in repo secrets)
+          # macOS code signing + notarization (optional - set in repo secrets)
           # CSC_LINK: ${{ secrets.MAC_CERTIFICATE }}
           # CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
           # APPLE_ID: ${{ secrets.APPLE_ID }}
