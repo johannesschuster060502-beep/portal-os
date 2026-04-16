@@ -152,7 +152,7 @@ export default function Home() {
               />
             </Link>
             <a
-              href="https://github.com/johannesschuster060502-beep/portal-os-releases"
+              href="https://github.com/johannesschuster060502-beep/portal-os"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 rounded-2xl tracking-wider no-underline transition-all hover:bg-white/5 hover:scale-[1.02]"

@@ -54,7 +54,7 @@ export default function Footer() {
               {t.footer.changelog}
             </Link>
             <a
-              href="https://github.com/johannesschuster060502-beep/portal-os-releases"
+              href="https://github.com/johannesschuster060502-beep/portal-os"
               target="_blank"
               rel="noopener noreferrer"
               className="tracking-wider no-underline transition-opacity hover:opacity-60"

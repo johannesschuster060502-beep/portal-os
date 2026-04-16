@@ -91,7 +91,7 @@ export interface Translations {
 const VERSION = process.env.NEXT_PUBLIC_VERSION || '1.0.4'
 const BASE =
   process.env.NEXT_PUBLIC_DOWNLOAD_BASE_URL ||
-  'https://github.com/johannesschuster060502-beep/portal-os-releases/releases/latest/download'
+  'https://github.com/johannesschuster060502-beep/portal-os/releases/latest/download'
 
 // ─────────────────────────────────────────────
 //  DEUTSCH (Standard)

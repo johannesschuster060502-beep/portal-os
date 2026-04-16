@@ -193,7 +193,7 @@ export default function DownloadPage() {
               {t.download.releaseInfo}
             </p>
             <a
-              href="https://github.com/johannesschuster060502-beep/portal-os-releases/releases"
+              href="https://github.com/johannesschuster060502-beep/portal-os/releases"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[11px] no-underline transition-opacity hover:opacity-70"
