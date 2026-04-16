@@ -61,7 +61,7 @@ export default function NewTabPage(): JSX.Element {
   const version = window.portalOS.versions.app
 
   return (
-    <div className="relative flex-1 flex flex-col overflow-hidden">
+    <div className="absolute inset-0 flex flex-col overflow-hidden" style={{ background: '#050505' }}>
       {/* Three.js ambient background */}
       <ThreeScene />
 
